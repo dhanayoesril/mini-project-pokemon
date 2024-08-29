@@ -13,7 +13,7 @@
 2. npm install
 
 # how to run development mode:
-2. npm run start
+1. npm run start
 
 # how to run production mode:
 1. npm run build
