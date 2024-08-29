@@ -25,9 +25,9 @@ const CardDetail = ({
           <div className="font-12 fw-600 mb-2 font-white">Nickname</div>
           <Row className="px-3 mb-3 d-flex justify-content-center">
             <Col
-              md={2}
-              sm={2}
-              xs={2}
+              md={3}
+              sm={3}
+              xs={3}
               className="detail-wrapper bg-warning mr-1"
             >
               <div className="name"> {localData?.nickname}</div>
@@ -37,7 +37,7 @@ const CardDetail = ({
       )}
       <div className="font-12 fw-600 mb-2 font-white">Name</div>
       <Row className="px-3 mb-3 d-flex justify-content-center">
-        <Col md={2} sm={2} xs={2} className="detail-wrapper bg-warning mr-1">
+        <Col md={3} sm={3} xs={3} className="detail-wrapper bg-warning mr-1">
           <div className="name">{name}</div>
         </Col>
       </Row>
@@ -47,9 +47,9 @@ const CardDetail = ({
         {types &&
           types.map((item, idx) => (
             <Col
-              md={2}
-              sm={2}
-              xs={2}
+              md={3}
+              sm={3}
+              xs={3}
               className="detail-wrapper bg-warning mr-1"
               key={idx}
             >

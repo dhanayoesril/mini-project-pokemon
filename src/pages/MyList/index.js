@@ -11,9 +11,10 @@ const MyList = () => {
 
   let myPokemonList = [];
   const localPokemon = getLocalStorage("myPokemonList") || [];
-  if (localPokemon) {
+  if (localPokemon?.length > 0) {
     myPokemonList = JSON.parse(localPokemon);
   }
+  console.log("myPokemonList", myPokemonList);
   const onClickCard = (id) => {
     navigate(`/${id}/detail`);
   };
@@ -32,6 +33,7 @@ const MyList = () => {
                   key={idx}
                   imageUrl={item?.sprites?.front_default}
                   name={item?.name}
+                  nickname={item?.nickname}
                   onClick={() => onClickCard(item?.id)}
                 />
               ))}

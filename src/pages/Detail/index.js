@@ -126,6 +126,10 @@ const Detail = () => {
   };
 
   const handleClickRenamePokemon = () => {
+    const existingPokemonList = getLocalStorage("myPokemonList");
+    const parsedList = JSON.parse(existingPokemonList);
+    const pokemon = parsedList.find((item) => item.id === detailPokemon?.id);
+    setNickname(pokemon?.nickname);
     setIsEdit(true);
     setShowModal(true);
   };
