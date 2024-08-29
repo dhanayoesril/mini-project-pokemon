@@ -1,3 +1,5 @@
+$blue: #3A7191;
+
 .detail-page-wrapper {
   .image-wrapper {
     text-align: center;
@@ -15,6 +17,26 @@
       align-items: center;
       font-size: 14px;
       font-weight: 500;
+    }
+  }
+
+}
+.all-moves {
+  .detail-wrapper {
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+
+    .name {
+      text-transform: capitalize;
+      color: $blue;
+    }
+
+    .name-skills {
+      color: white;
     }
   }
 }

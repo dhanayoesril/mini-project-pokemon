@@ -75,3 +75,20 @@ export const postReleasePokemon = () => {
   const number = Math.floor(Math.random() * 100);
   return isPrime(number);
 };
+
+export const getFibonacciNumber = (n) => {
+  // Use mock api : to get fibonacci number
+  let n1 = 0,
+    n2 = 1,
+    nextTerm;
+
+  const result = [];
+
+  for (let i = 1; i <= n; i++) {
+    result.push(n1);
+    nextTerm = n1 + n2;
+    n1 = n2;
+    n2 = nextTerm;
+  }
+  return result[n - 1];
+};
