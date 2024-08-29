@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { Card, Row, Col } from "react-bootstrap";
+import Footer from "../../components/Footer";
+import CardList from "../../components/CardList";
+import BaseLayout from "../../components/BaseLayout";
+import { useNavigate } from "react-router-dom";
+import { Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getListPokemon } from "../../actions/pokemonActions";
-import Footer from "../../components/Footer";
-import BaseLayout from "../../components/BaseLayout";
-import CardList from "../../components/CardList";
 import "./styles.scss";
 
 const List = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     data: listPokemon,
     loading,
@@ -28,11 +30,16 @@ const List = () => {
     getDataPokemon(url);
   };
 
+  const onClickCard = (id) => {
+    navigate(`/${id}/detail`);
+  };
+
   return (
     <BaseLayout
       loading={loading}
       previous={previous}
       next={next}
+      showPagination={true}
       onClickPageAction={(url) => onClickPageAction(url)}
     >
       <div className="p-4 mb-4">
@@ -47,9 +54,10 @@ const List = () => {
             {listPokemon &&
               listPokemon.map((item, idx) => (
                 <CardList
+                  key={idx}
                   imageUrl={item?.sprites?.front_default}
                   name={item?.name}
-                  key={idx}
+                  onClick={() => onClickCard(item?.id)}
                 />
               ))}
           </Row>

@@ -1,8 +1,7 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
-import "./styles.scss";
+import { Row, Col, Button } from "react-bootstrap";
 import * as ImageAssets from "../../constants/imageAssets";
-import { Button } from "react-bootstrap";
+import "./styles.scss";
 
 const BaseLayout = ({
   children,
@@ -10,6 +9,7 @@ const BaseLayout = ({
   previous,
   next,
   onClickPageAction,
+  showPagination,
 }) => {
   return (
     <div className="wrapper container-fluid">
@@ -23,25 +23,27 @@ const BaseLayout = ({
             />
             <div>Get your pokemon now!</div>
           </div>
-          <div className="d-flex flex-row justify-content-center align-items-center">
-            <Button
-              className="btn-pagination"
-              variant="warning"
-              onClick={() => onClickPageAction(previous)}
-              disabled={!previous}
-            >
-              <div className="font-14 fw-500">Previous</div>
-            </Button>
-            <div className="mx-2 font-14 fw-500">Page</div>
-            <Button
-              className="btn-pagination"
-              variant="warning"
-              onClick={() => onClickPageAction(next)}
-              disabled={!next}
-            >
-              <div className="font-14 fw-500">Next</div>
-            </Button>
-          </div>
+          {showPagination && (
+            <div className="d-flex flex-row justify-content-center align-items-center">
+              <Button
+                className="btn-pagination"
+                variant="warning"
+                onClick={() => onClickPageAction(previous)}
+                disabled={!previous}
+              >
+                <div className="font-14 fw-500">Previous</div>
+              </Button>
+              <div className="mx-4 font-14 fw-500">Page</div>
+              <Button
+                className="btn-pagination"
+                variant="warning"
+                onClick={() => onClickPageAction(next)}
+                disabled={!next}
+              >
+                <div className="font-14 fw-500">Next</div>
+              </Button>
+            </div>
+          )}
           <div className="children-wrapper">{children}</div>
         </Col>
       </Row>

@@ -1,0 +1,33 @@
+$blue: #3A7191;
+
+.card-detail-wrapper {
+  background-color: #3A7191;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  .detail-wrapper {
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+
+    .name {
+      text-transform: capitalize;
+      color: $blue;
+    }
+
+    .name-skills {
+      color: white;
+    }
+  }
+
+  .other-wrapper {
+    cursor: pointer;
+    width: 160px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
