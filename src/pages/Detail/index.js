@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal, Row, Col } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDetailPokemon,
   postCatchPokemon,
   postReleasePokemon,
+  getFibonacciNumber,
 } from "../../actions/pokemonActions";
 import { ToastContainer, toast } from "react-toastify";
 import {
@@ -25,6 +26,10 @@ const Detail = () => {
   const navigate = useNavigate();
 
   const [isCatched, setIsCatched] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showModalMoves, setShowModalMoves] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [nickname, setNickname] = useState("");
 
   const { data: detailPokemon, loading } = useSelector(
     (state) => state.detailPokemon
@@ -32,25 +37,59 @@ const Detail = () => {
 
   const pokemonImage = detailPokemon?.sprites;
 
+  const handleSavePokemon = () => {
+    let newPokemonList = [];
+    const existingPokemonList = getLocalStorage("myPokemonList");
+    if (existingPokemonList) {
+      newPokemonList = JSON.parse(existingPokemonList);
+    }
+    const newDataPokemon = detailPokemon;
+    newDataPokemon.nickname = nickname;
+    newDataPokemon.editCount = 0;
+    newPokemonList.push(newDataPokemon);
+    setLocalStorage("myPokemonList", JSON.stringify(newPokemonList));
+
+    setShowModal(false);
+
+    toast.success("Pokemon catched!", {
+      position: "top-center",
+      autoClose: 1500,
+    });
+
+    setTimeout(() => {
+      navigate(0);
+    }, 1500);
+  };
+
+  const handleEditPokemon = async () => {
+    let newPokemonList = [];
+    const existingPokemonList = getLocalStorage("myPokemonList");
+    if (existingPokemonList) {
+      newPokemonList = JSON.parse(existingPokemonList);
+    }
+    const indexData = newPokemonList.findIndex(
+      (item) => item.id === detailPokemon.id
+    );
+    const dataEdit = newPokemonList.find(
+      (item) => item.id === detailPokemon.id
+    );
+    const fibonacciNum = await getFibonacciNumber(dataEdit?.editCount + 1);
+    newPokemonList[indexData].nickname = `${nickname}-${fibonacciNum}`;
+    newPokemonList[indexData].editCount = dataEdit?.editCount + 1;
+    setLocalStorage("myPokemonList", JSON.stringify(newPokemonList));
+
+    setShowModal(false);
+
+    toast.success("Change nickname success!", {
+      position: "top-center",
+      autoClose: 1500,
+    });
+  };
+
   const handleClickCatchPokemon = async () => {
     const catchResult = await postCatchPokemon();
     if (catchResult) {
-      let newPokemonList = [];
-      const existingPokemonList = getLocalStorage("myPokemonList");
-      if (existingPokemonList) {
-        newPokemonList = JSON.parse(existingPokemonList);
-      }
-      newPokemonList.push(detailPokemon);
-      setLocalStorage("myPokemonList", JSON.stringify(newPokemonList));
-
-      toast.success("Pokemon catched!", {
-        position: "top-center",
-        autoClose: 1500,
-      });
-
-      setTimeout(() => {
-        navigate(0);
-      }, 1500);
+      setShowModal(true);
     } else {
       toast.error("Failed to catch pokemon!", {
         position: "top-center",
@@ -87,7 +126,13 @@ const Detail = () => {
   };
 
   const handleClickRenamePokemon = () => {
-    alert("rename pokemon");
+    setIsEdit(true);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setNickname("");
   };
 
   useEffect(() => {
@@ -160,14 +205,75 @@ const Detail = () => {
             </div>
             <div className="mb-4">
               <CardDetail
+                isCatched={isCatched}
+                id={detailPokemon?.id}
+                name={detailPokemon?.name}
                 types={detailPokemon?.types}
                 moves={detailPokemon?.moves}
+                setShowModalMoves={() => setShowModalMoves(true)}
               />
             </div>
             <ToastContainer />
           </div>
         )}
       </div>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered={true}
+        size="md"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {isEdit ? "Edit Pokemon Nickname" : "Input Pokemon Nickname"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            className="form-control"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            disabled={nickname?.length < 1}
+            onClick={isEdit ? handleEditPokemon : handleSavePokemon}
+          >
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showModalMoves}
+        onHide={() => setShowModalMoves(false)}
+        centered={true}
+        size="md"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>All Moves</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row className={`px-3 d-flex justify-content-center mb-1 all-moves`}>
+            {detailPokemon?.moves &&
+              detailPokemon?.moves.map((item, idx) => (
+                <Col
+                  md={4}
+                  sm={4}
+                  xs={4}
+                  className="detail-wrapper bg-warning mr-1 mb-1 text-center"
+                  key={idx}
+                >
+                  <div className="font-14 fw-600">{item?.move?.name}</div>
+                </Col>
+              ))}
+          </Row>
+        </Modal.Body>
+      </Modal>
       <Footer />
     </BaseLayout>
   );
