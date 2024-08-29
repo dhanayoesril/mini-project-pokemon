@@ -1,5 +1,5 @@
 export const getLocalStorage = (name) => {
-  const data = localStorage.getItem("");
+  const data = localStorage.getItem(name);
   if (data) {
     return JSON.parse(data);
   }
