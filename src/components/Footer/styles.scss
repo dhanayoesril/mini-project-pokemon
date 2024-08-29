@@ -1,12 +1,11 @@
-$blue: #4160A7;
+$blue: #3A7191;
 
 .footer-wrapper {
   padding: 0px;
   position: fixed;
   display: flex;
   bottom: 0;
-  background-color: $blue;
-  height: 10%;
+  height: 8%;
   width: 50%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -20,5 +19,27 @@ $blue: #4160A7;
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
+
+    .nav-wrapper {
+      text-align: center;
+      cursor: pointer;
+
+      .nav-icon {
+        width: 20px;
+      }
+  
+      .nav-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        color: $blue;
+        opacity: 50%;
+        
+        &.active {
+          color: $blue;
+          opacity: 100%;
+        }
+      }
+    }
   }
 }

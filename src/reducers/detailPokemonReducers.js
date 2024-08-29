@@ -11,21 +11,21 @@ export const detailPokemonReducers = (
   action
 ) => {
   switch (action.type) {
-    case ActionTypes.FETCH_LIST_POKEMON_PENDING:
+    case ActionTypes.FETCH_DETAIL_POKEMON_PENDING:
       return {
         ...state,
         loading: true,
         data: {},
         error: false,
       };
-    case ActionTypes.FETCH_LIST_POKEMON_SUCCESS:
+    case ActionTypes.FETCH_DETAIL_POKEMON_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action?.payload,
         error: false,
       };
-    case ActionTypes.FETCH_LIST_POKEMON_ERROR:
+    case ActionTypes.FETCH_DETAIL_POKEMON_ERROR:
       return {
         ...state,
         loading: false,

@@ -1,7 +1,7 @@
 import * as ActionTypes from "../constants/actionTypes";
 import Axios from "axios";
 
-export const getDetailPokemon = async (datas) => {
+export const getDetailAllPokemon = async (datas) => {
   const promises = [];
 
   for (const data of datas) {
@@ -22,7 +22,7 @@ export const getListPokemon = (url) => {
       .then(async (res) => {
         const { data } = res;
         const dataPokemon = data?.results;
-        const completedData = await getDetailPokemon(dataPokemon);
+        const completedData = await getDetailAllPokemon(dataPokemon);
 
         dispatch({
           type: ActionTypes.FETCH_LIST_POKEMON_SUCCESS,
@@ -43,22 +43,22 @@ export const getListPokemon = (url) => {
   };
 };
 
-// export const getDetailPokemon = (id) => {
-//   return (dispatch) => {
-//     dispatch({ type: ActionTypes.FETCH_DETAIL_POKEMON_PENDING });
+export const getDetailPokemon = (id) => {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.FETCH_DETAIL_POKEMON_PENDING });
 
-//     return Axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-//       .then((res) => {
-//         const { data: payload } = res;
-//         dispatch({ type: ActionTypes.FETCH_DETAIL_POKEMON_SUCCESS, payload });
-//       })
-//       .catch((err) => {
-//         const errMessage =
-//           err?.response?.data?.message || "Failed to get detail pokemon";
-//         dispatch({
-//           type: ActionTypes.FETCH_DETAIL_POKEMON_ERROR,
-//           error: errMessage,
-//         });
-//       });
-//   };
-// };
+    return Axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      .then((res) => {
+        const { data: payload } = res;
+        dispatch({ type: ActionTypes.FETCH_DETAIL_POKEMON_SUCCESS, payload });
+      })
+      .catch((err) => {
+        const errMessage =
+          err?.response?.data?.message || "Failed to get detail pokemon";
+        dispatch({
+          type: ActionTypes.FETCH_DETAIL_POKEMON_ERROR,
+          error: errMessage,
+        });
+      });
+  };
+};

@@ -1,0 +1,20 @@
+.detail-page-wrapper {
+  .image-wrapper {
+    text-align: center;
+
+    .image {
+      height: 200px;
+    }
+  }
+
+  .btn-catch-wrapper {
+    .btn-catch {
+      height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
