@@ -1,5 +1,6 @@
 import * as ActionTypes from "../constants/actionTypes";
 import Axios from "axios";
+import { isPrime } from "../helper/general";
 
 export const getDetailAllPokemon = async (datas) => {
   const promises = [];
@@ -61,4 +62,16 @@ export const getDetailPokemon = (id) => {
         });
       });
   };
+};
+
+export const postCatchPokemon = () => {
+  // Use mock api : with probability 50% true or false
+  const randomBoolean = () => Math.random() >= 0.5;
+  return randomBoolean();
+};
+
+export const postReleasePokemon = () => {
+  // Use mock api : with random number & check its a prime number or not
+  const number = Math.floor(Math.random() * 100);
+  return isPrime(number);
 };

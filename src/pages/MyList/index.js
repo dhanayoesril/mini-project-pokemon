@@ -9,8 +9,11 @@ import { useNavigate } from "react-router-dom";
 const MyList = () => {
   const navigate = useNavigate();
 
-  const myPokemonList = getLocalStorage("myPokemonList") || [];
-
+  let myPokemonList = [];
+  const localPokemon = getLocalStorage("myPokemonList") || [];
+  if (localPokemon) {
+    myPokemonList = JSON.parse(localPokemon);
+  }
   const onClickCard = (id) => {
     navigate(`/${id}/detail`);
   };
